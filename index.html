@@ -120,37 +120,105 @@
             <p class="best-for"><strong>Goal:</strong> To identify key players and hidden gems for deal sourcing. We should leverage Origin for this if possible.</p>
             <p class="question-template"><strong>Q1 (Leaders):</strong> "Which established vendors in <strong>[Sub_Vertical]</strong> do you see as the leaders?"<br><br><strong>Q2 (Challengers):</strong> "Any emerging companies in this space that have impressed you recently?"</p>
 
-            <h3 class="viz-option-title">Visualization A: Grouped Table</h3>
-            <p class="best-for"><strong>Best for:</strong> Clearly organizing vendors by category. The "Origin Link" provides a direct CTA for internal teams. We should recommend prioritizing Origin profile creation (Spotlights) for all companies identified in this phase.</p>
-            <div class="overflow-x-auto rounded-lg border mt-4">
-                <table class="w-full text-sm text-left text-gray-500">
-                    <thead class="text-xs text-gray-700 uppercase" style="background-color: #F9FAFB;">
-                        <tr><th class="px-6 py-3">Company</th><th class="px-6 py-3">Expert Quote</th><th class="px-6 py-3">Origin Link</th></tr>
-                    </thead>
-                    <tbody>
-                        <!-- Category 1 -->
-                        <tr class="bg-gray-50"><td colspan="3" class="px-6 py-3 font-semibold text-gray-600">Endpoint Security</td></tr>
-                        <tr class="bg-white border-b"><td class="px-6 py-4 font-medium text-gray-900">CrowdStrike</td><td class="px-6 py-4">"The clear market leader, but complexity is a growing concern."</td><td class="px-6 py-4"><a href="#" class="text-blue-600 hover:underline">View Profile</a></td></tr>
-                        <tr class="bg-white border-b"><td class="px-6 py-4 font-medium text-gray-900">SentinelOne</td><td class="px-6 py-4">"Strong challenger, very aggressive on pricing."</td><td class="px-6 py-4"><a href="#" class="text-blue-600 hover:underline">View Profile</a></td></tr>
-                        <tr class="bg-white border-b"><td class="px-6 py-4 font-medium text-gray-900">ThreatLocker</td><td class="px-6 py-4">"Interesting zero-trust approach, gaining traction in mid-market."</td><td class="px-6 py-4"><a href="#" class="text-blue-600 hover:underline">View Profile</a></td></tr>
-                        <!-- Category 2 -->
-                        <tr class="bg-gray-50"><td colspan="3" class="px-6 py-3 font-semibold text-gray-600">Cloud Security</td></tr>
-                        <tr class="bg-white border-b"><td class="px-6 py-4 font-medium text-gray-900">Palo Alto Networks</td><td class="px-6 py-4">"The 800-pound gorilla, trying to bundle everything."</td><td class="px-6 py-4"><a href="#" class="text-blue-600 hover:underline">View Profile</a></td></tr>
-                        <tr class="bg-white border-b"><td class="px-6 py-4 font-medium text-gray-900">Zscaler</td><td class="px-6 py-4">"Best-in-class for secure web gateway (SWG)."</td><td class="px-6 py-4"><a href="#" class="text-blue-600 hover:underline">View Profile</a></td></tr>
-                         <tr class="bg-white border-b"><td class="px-6 py-4 font-medium text-gray-900">Wiz</td><td class="px-6 py-4">"Incredibly fast growth, becoming the standard for CNAPP."</td><td class="px-6 py-4"><a href="#" class="text-blue-600 hover:underline">View Profile</a></td></tr>
-                        <!-- Category 3 -->
-                        <tr class="bg-gray-50"><td colspan="3" class="px-6 py-3 font-semibold text-gray-600">GRC Automation (Emerging)</td></tr>
-                        <tr class="bg-white border-b"><td class="px-6 py-4 font-medium text-gray-900">Drata</td><td class="px-6 py-4">"High-growth leader, very popular with VC-backed companies."</td><td class="px-6 py-4"><a href="#" class="text-blue-600 hover:underline">View Profile</a></td></tr>
-                        <tr class="bg-white"><td class="px-6 py-4 font-medium text-gray-900">Vanta</td><td class="px-6 py-4">"Strong competitor to Drata, focuses on ease of use."</td><td class="px-6 py-4"><a href="#" class="text-blue-600 hover:underline">View Profile</a></td></tr>
-                    </tbody>
-                </table>
-                 <p class="text-xs text-gray-500 mt-2 px-6 py-2"><strong>Best Practice Note:</strong> If a vendor (e.g., Palo Alto Networks) is cited as a leader in multiple categories, they should be listed under each relevant category. This accurately reflects their market position and breadth.</p>
+            <h3 class="viz-option-title">Visualization A: The Vendor Map</h3>
+            <p class="best-for"><strong>Best for:</strong> A high-level overview of the established players, organized by category for quick reference.</p>
+            <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-6">
+                <div>
+                    <h4 class="font-semibold text-gray-700">Network Security</h4>
+                    <ul class="mt-2 text-sm text-gray-600 list-disc list-inside">
+                        <li>Palo Alto Networks</li>
+                        <li>Fortinet</li>
+                        <li>Cisco</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-gray-700">Endpoint Security</h4>
+                    <ul class="mt-2 text-sm text-gray-600 list-disc list-inside">
+                        <li>CrowdStrike</li>
+                        <li>SentinelOne</li>
+                        <li>ThreatLocker</li>
+                    </ul>
+                </div>
+                 <div>
+                    <h4 class="font-semibold text-gray-700">Cloud Security</h4>
+                    <ul class="mt-2 text-sm text-gray-600 list-disc list-inside">
+                        <li>Zscaler</li>
+                        <li>Netskope</li>
+                        <li>Palo Alto Networks</li>
+                    </ul>
+                </div>
+                 <div>
+                    <h4 class="font-semibold text-gray-700">Identity & Access</h4>
+                    <ul class="mt-2 text-sm text-gray-600 list-disc list-inside">
+                        <li>CyberArk</li>
+                        <li>Okta</li>
+                        <li>Microsoft</li>
+                    </ul>
+                </div>
+                 <div>
+                    <h4 class="font-semibold text-gray-700">Email & Web Security</h4>
+                    <ul class="mt-2 text-sm text-gray-600 list-disc list-inside">
+                        <li>Barracuda Networks</li>
+                        <li>Mimecast</li>
+                        <li>Proofpoint</li>
+                    </ul>
+                </div>
+                 <div>
+                    <h4 class="font-semibold text-gray-700">Risk & Compliance</h4>
+                    <ul class="mt-2 text-sm text-gray-600 list-disc list-inside">
+                        <li>VikingCloud</li>
+                        <li>Heimdal Security</li>
+                    </ul>
+                </div>
             </div>
 
-            <h3 class="viz-option-title">Visualization B: Treemap Chart</h3>
-            <p class="best-for"><strong>Best for:</strong> When you have 10+ vendors and want to visually represent market structure. The size of each block should correspond to the number of times an expert cited that vendor, providing a quick visual of market mindshare.</p>
-            <canvas id="landscapeChartTreemap"></canvas>
-            <div class="gsheet-note"><strong>Google Sheets Guide:</strong> While Google Sheets doesn't have a native treemap, you can create one by inserting a chart and selecting "Treemap chart" from the chart types. The data should be structured with columns for Category, Vendor, and Mentions (size).</div>
+            <hr class="my-10 border-t-2 border-dashed">
+
+            <h3 class="viz-option-title">Visualization B: Emerging Companies & Hidden Gems</h3>
+            <p class="best-for"><strong>Best for:</strong> Highlighting actionable, off-market intelligence. The card format makes each company a distinct piece of valuable intel.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <!-- Emerging Company Card with Logo -->
+                <div class="border rounded-lg p-4 bg-gray-50 flex items-start space-x-4">
+                   <img src="HiddenLayer.png" alt="HiddenLayer Logo" class="w-12 h-12 rounded-md object-contain">
+                    <div>
+                        <h4 class="font-bold text-gray-800">HiddenLayer</h4>
+                        <p class="text-xs text-gray-500 mb-2">AI Model Security</p>
+                        <p class="text-sm text-gray-700">"A venture-backed startup focused on the critical and nascent field of securing AI models. A target for growth equity or a strategic add-on."</p>
+                        <a href="#" class="text-sm text-blue-600 hover:underline mt-2 inline-block">View in Origin →</a>
+                    </div>
+                </div>
+                <!-- Emerging Company Card with Logo -->
+                <div class="border rounded-lg p-4 bg-gray-50 flex items-start space-x-4">
+                     <img src="Drata.png" alt="Drata Logo" class="w-12 h-12 rounded-md object-contain">
+                    <div>
+                        <h4 class="font-bold text-gray-800">Drata</h4>
+                        <p class="text-xs text-gray-500 mb-2">GRC Automation</p>
+                        <p class="text-sm text-gray-700">"A high-growth, venture-backed leader in the GRC/compliance automation space. Fits the profile for a significant growth equity investment."</p>
+                         <a href="#" class="text-sm text-blue-600 hover:underline mt-2 inline-block">View in Origin →</a>
+                    </div>
+                </div>
+                 <!-- Emerging Company Card with Logo -->
+                <div class="border rounded-lg p-4 bg-gray-50 flex items-start space-x-4">
+                     <img src="Summit7.png" alt="Summit 7 Logo" class="w-12 h-12 rounded-md object-contain">
+                    <div>
+                        <h4 class="font-bold text-gray-800">Summit 7</h4>
+                        <p class="text-xs text-gray-500 mb-2">Compliance Niche</p>
+                        <p class="text-sm text-gray-700">"A key service provider in the CMMC compliance market for defense contractors. It's a prime target for an add-on acquisition."</p>
+                         <a href="#" class="text-sm text-blue-600 hover:underline mt-2 inline-block">View in Origin →</a>
+                    </div>
+                </div>
+                 <!-- Emerging Company Card with Logo -->
+                <div class="border rounded-lg p-4 bg-gray-50 flex items-start space-x-4">
+                     <img src="Mikrotik.png" alt="Mikrotik Logo" class="w-12 h-12 rounded-md object-contain">
+                    <div>
+                        <h4 class="font-bold text-gray-800">Mikrotik</h4>
+                        <p class="text-xs text-gray-500 mb-2">Off-Market Opportunity</p>
+                        <p class="text-sm text-gray-700">"A privately-held company with a strong, cult-like following for its powerful and affordable hardware. Represents a unique buyout opportunity."</p>
+                         <a href="#" class="text-sm text-blue-600 hover:underline mt-2 inline-block">View in Origin →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="gsheet-note"><strong>Google Sheets Guide:</strong> These two sections can be created from a single master table in Sheets with columns for "Company", "Category", "Status" (e.g., Leader, Emerging), "Expert Quote", and "Origin Link". You can then filter to create the separate lists.</div>
         </div>
 
         <!-- Theme 5: Eliciting Frameworks -->
@@ -298,17 +366,17 @@
                         if (ctx.type !== 'data') return 'transparent';
                         const category = ctx.raw._data.category;
                         const colors = {
-                            'Endpoint Security': darkBlue,
-                            'Cloud Security': vibrantBlue,
-                            'Identity': lightBlue,
-                            'GRC': gray,
-                            'Email Security': '#93C5FD'
+                            'Endpoint Security': 'rgba(0, 35, 102, 0.8)', // darkBlue
+                            'Cloud Security': 'rgba(0, 87, 255, 0.8)', // vibrantBlue
+                            'Identity': 'rgba(160, 196, 255, 0.8)', // lightBlue
+                            'GRC': 'rgba(203, 213, 225, 0.8)', // gray
+                            'Email Security': 'rgba(147, 197, 253, 0.8)'
                         };
                         return colors[category] || gray;
                     },
                     borderColor: 'white',
                     borderWidth: 2,
-                    spacing: 0.5,
+                    spacing: 1,
                     labels: {
                         display: true,
                         formatter: (ctx) => {
