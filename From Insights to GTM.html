@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The GTM Interview & Visualization Playbook</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-treemap@2.3.0/dist/chartjs-chart-treemap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F2F5F8;
+        }
+        .playbook-title { color: #002366; }
+        .playbook-subtitle { color: #4A5568; }
+        .card {
+            background-color: #FFFFFF;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: 0 4px_6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            margin-bottom: 2.5rem;
+        }
+        .section-title { font-size: 1.5rem; font-weight: 700; color: #002366; border-bottom: 2px solid #0057FF; padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
+        .question-template { background-color: #EBF2FF; color: #002366; border-left: 4px solid #0057FF; padding: 1rem; border-radius: 0.25rem; font-family: monospace; font-size: 0.9rem; line-height: 1.5; }
+        .viz-option-title { font-weight: 600; color: #1E293B; margin-top: 2rem; margin-bottom: 1rem; }
+        .best-for { font-size: 0.875rem; color: #475569; margin-bottom: 1rem; }
+        .gsheet-note { background-color: #F0FFF4; border-left: 4px solid #48BB78; padding: 0.75rem; margin-top: 1rem; font-size: 0.875rem; color: #2F855A; }
+    </style>
+</head>
+<body class="p-4 sm:p-6 md:p-10">
+    <div class="max-w-5xl mx-auto">
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold playbook-title">The GTM Interview & Visualization Playbook</h1>
+            <p class="mt-4 text-lg playbook-subtitle">A Repeatable Framework for Turning Expert Interviews into High-Impact GTM Assets</p>
+        </header>
+
+        <!-- Introduction -->
+        <div class="card">
+            <h2 class="section-title">Why This Playbook?</h2>
+            <p class="playbook-subtitle">This playbook provides a simple, standardized module of questions and corresponding visualization templates. By incorporating these questions into your expert interviews for each micro-community, you provide the GTM team with the exact fuel needed to create compelling, data-driven assets. This collaboration turns your invaluable qualitative work into a predictable engine for generating headline statistics, insightful frameworks, and market maps that drive qualified meetings with our target clients.</p>
+        </div>
+
+        <!-- Theme 1: Measuring Trends -->
+        <div class="card">
+            <h2 class="section-title">Theme 1: Measuring Trends</h2>
+            <p class="best-for"><strong>Goal:</strong> To capture the direction and magnitude of market shifts (e.g., spending, adoption).</p>
+            <p class="question-template"><strong>Question Template:</strong> "Looking at your budget for <strong>[Sub_Vertical]</strong>, is your spend increasing, decreasing, or flat year-over-year? By what rough <strong>percentage range</strong>? (decreasing, same, Increase: ≤5%, 5–15%, 15–30%, >30%)"</p>
+            
+            <h3 class="viz-option-title">Visualization: Horizontal Bar Chart</h3>
+            <p class="best-for"><strong>Best for:</strong> Quickly showing the dominant trend. Highly readable and impactful for any number of respondents.</p>
+            <canvas id="trendChartBar"></canvas>
+            <div class="gsheet-note"><strong>Google Sheets Guide:</strong> This is a standard "Bar chart". Input your categories in one column and the count of responses in the next.</div>
+        </div>
+
+        <!-- Theme 2: Measuring Allocation -->
+        <div class="card">
+            <h2 class="section-title">Theme 2: Measuring Allocation</h2>
+            <p class="best-for"><strong>Goal:</strong> To understand resources trends, creates interesting visual elements.</p>
+            <p class="question-template"><strong>Question Template:</strong> "Thinking about that increase in <strong>[Topic]</strong> spend, could you distribute 100 points among these three categories based on where the money is going: <strong>Tooling/Software, Headcount, and Managed Services?</strong>"</p>
+
+            <h3 class="viz-option-title">Visualization A: 100% Stacked Bar Chart</h3>
+            <p class="best-for"><strong>Best for:</strong> A clean, powerful visual showing the proportional breakdown of a whole. Excellent for showing budget allocation.</p>
+            <div class="relative h-24"><canvas id="allocationChartStacked"></canvas></div>
+            <div class="gsheet-note"><strong>Google Sheets Guide:</strong> Use the "100% stacked bar chart" type. Calculate the average points for each category from your interview data and input them as separate series.</div>
+
+            <h3 class="viz-option-title">Visualization B: Waffle Chart (for Web/PDF)</h3>
+            <p class="best-for"><strong>Best for:</strong> I think these charts work really well for final reports or social media assets. Not available out of the box with Canva/GSheets but not too difficult to build manually.</p>
+            <div id="waffle-chart-container" class="mt-4"></div>
+        </div>
+        
+        <!-- Theme 3: Measuring Sentiment, Priorities & Headlines -->
+        <div class="card">
+            <h2 class="section-title">Theme 3: Measuring Sentiment, Priorities & Headlines</h2>
+            <p class="best-for"><strong>Goal:</strong> To uncover potential provocative headlines, quantify qualitative feelings, and rank what matters most.</p>
+            <p class="question-template"><strong>Q1 (Sentiment):</strong> "On a scale of 1-5, how prepared is your organization to manage the risks from <strong>[Threat]</strong>?"<br><br><strong>Q2 (Priorities):</strong> "What is your #1 investment priority for <strong>[Topic]</strong> from this list: <strong>[Option A], [Option B], or [Option C]?</strong>" (if needed, add ?<strong> "Other—specify"?</strong>)<br><br><strong>Q3 (Headline):</strong> "In the world of <strong>[Sub_Vertical]</strong>, what is the single most <strong>overrated trend</strong> right now, and what is the most <strong>underrated</strong> one?"</p>
+            
+            <h3 class="viz-option-title">Sentiment Visuals: Two Alternatives</h3>
+             <div class="grid md:grid-cols-2 gap-8 items-start">
+                <div>
+                    <h4 class="font-semibold text-center mb-2">Alternative A: The Scorecard</h4>
+                    <p class="best-for text-center"><strong>Best for:</strong> Creating a powerful "headline statistic" - Can also be shown as a %.</p>
+                    <div class="bg-gradient-to-br from-[#0057FF] to-[#002366] rounded-lg p-8 text-white text-center mt-4">
+                        <div class="text-6xl font-bold">2.8<span class="text-4xl font-medium">/5.0</span></div>
+                        <p class="mt-2 text-sm opacity-80">Avg. AI Security Readiness</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-center mb-2">Alternative B: Distribution of Responses</h4>
+                    <p class="best-for text-center"><strong>Best for:</strong> Showing nuance and polarization in sentiment. Reveals if experts are clustered or divided.</p>
+                    <canvas id="sentimentDistributionChart"></canvas>
+                </div>
+            </div>
+            <div class="gsheet-note"><strong>Google Sheets Guide:</strong> For Alternative B, create a simple frequency table of the 1-5 responses, then use a standard "Column chart" to visualize the distribution.</div>
+
+             <h3 class="viz-option-title">Priorities Visual: Bar Chart</h3>
+             <p class="best-for"><strong>Best for:</strong> When the data shows a clear #1 priority among experts.</p>
+             <canvas id="prioritiesChartClear"></canvas>
+            
+            <h3 class="viz-option-title">Headline Visual: "Hot vs. Not" Table</h3>
+            <p class="best-for"><strong>Best for:</strong> Highlighting one quote from an expert that summarizes expert consensus on overrated and underrated trends. This creates a highly shareable, opinionated piece of content.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div class="border-2 border-red-200 bg-red-50 rounded-lg p-4">
+                    <h4 class="font-bold text-lg text-red-700">Overrated Trend 🔻</h4>
+                    <p class="mt-2 text-gray-700">"Everyone is chasing 'Agentic AI' without a clear use case. It's a solution in search of a problem for most."</p>
+                </div>
+                <div class="border-2 border-green-200 bg-green-50 rounded-lg p-4">
+                    <h4 class="font-bold text-lg text-green-700">Underrated Trend 🔺</h4>
+                    <p class="mt-2 text-gray-700">"The real value is in AI for code security. Finding vulnerabilities before they're deployed has a massive, immediate ROI."</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Theme 4: Mapping the Landscape -->
+        <div class="card">
+            <h2 class="section-title">Theme 4: Mapping the Landscape</h2>
+            <p class="best-for"><strong>Goal:</strong> To identify key players and hidden gems for deal sourcing. We should leverage Origin for this if possible.</p>
+            <p class="question-template"><strong>Q1 (Leaders):</strong> "Which established vendors in <strong>[Sub_Vertical]</strong> do you see as the leaders?"<br><br><strong>Q2 (Challengers):</strong> "Any emerging companies in this space that have impressed you recently?"</p>
+
+            <h3 class="viz-option-title">Visualization A: Grouped Table</h3>
+            <p class="best-for"><strong>Best for:</strong> Clearly organizing vendors by category. The "Origin Link" provides a direct CTA for internal teams. We should recommend prioritizing Origin profile creation (Spotlights) for all companies identified in this phase.</p>
+            <div class="overflow-x-auto rounded-lg border mt-4">
+                <table class="w-full text-sm text-left text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase" style="background-color: #F9FAFB;">
+                        <tr><th class="px-6 py-3">Company</th><th class="px-6 py-3">Expert Quote</th><th class="px-6 py-3">Origin Link</th></tr>
+                    </thead>
+                    <tbody>
+                        <!-- Category 1 -->
+                        <tr class="bg-gray-50"><td colspan="3" class="px-6 py-3 font-semibold text-gray-600">Endpoint Security</td></tr>
+                        <tr class="bg-white border-b"><td class="px-6 py-4 font-medium text-gray-900">CrowdStrike</td><td class="px-6 py-4">"The clear market leader, but complexity is a growing concern."</td><td class="px-6 py-4"><a href="#" class="text-blue-600 hover:underline">View Profile</a></td></tr>
+                        <tr class="bg-white border-b"><td class="px-6 py-4 font-medium text-gray-900">SentinelOne</td><td class="px-6 py-4">"Strong challenger, very aggressive on pricing."</td><td class="px-6 py-4"><a href="#" class="text-blue-600 hover:underline">View Profile</a></td></tr>
+                        <tr class="bg-white border-b"><td class="px-6 py-4 font-medium text-gray-900">ThreatLocker</td><td class="px-6 py-4">"Interesting zero-trust approach, gaining traction in mid-market."</td><td class="px-6 py-4"><a href="#" class="text-blue-600 hover:underline">View Profile</a></td></tr>
+                        <!-- Category 2 -->
+                        <tr class="bg-gray-50"><td colspan="3" class="px-6 py-3 font-semibold text-gray-600">Cloud Security</td></tr>
+                        <tr class="bg-white border-b"><td class="px-6 py-4 font-medium text-gray-900">Palo Alto Networks</td><td class="px-6 py-4">"The 800-pound gorilla, trying to bundle everything."</td><td class="px-6 py-4"><a href="#" class="text-blue-600 hover:underline">View Profile</a></td></tr>
+                        <tr class="bg-white border-b"><td class="px-6 py-4 font-medium text-gray-900">Zscaler</td><td class="px-6 py-4">"Best-in-class for secure web gateway (SWG)."</td><td class="px-6 py-4"><a href="#" class="text-blue-600 hover:underline">View Profile</a></td></tr>
+                         <tr class="bg-white border-b"><td class="px-6 py-4 font-medium text-gray-900">Wiz</td><td class="px-6 py-4">"Incredibly fast growth, becoming the standard for CNAPP."</td><td class="px-6 py-4"><a href="#" class="text-blue-600 hover:underline">View Profile</a></td></tr>
+                        <!-- Category 3 -->
+                        <tr class="bg-gray-50"><td colspan="3" class="px-6 py-3 font-semibold text-gray-600">GRC Automation (Emerging)</td></tr>
+                        <tr class="bg-white border-b"><td class="px-6 py-4 font-medium text-gray-900">Drata</td><td class="px-6 py-4">"High-growth leader, very popular with VC-backed companies."</td><td class="px-6 py-4"><a href="#" class="text-blue-600 hover:underline">View Profile</a></td></tr>
+                        <tr class="bg-white"><td class="px-6 py-4 font-medium text-gray-900">Vanta</td><td class="px-6 py-4">"Strong competitor to Drata, focuses on ease of use."</td><td class="px-6 py-4"><a href="#" class="text-blue-600 hover:underline">View Profile</a></td></tr>
+                    </tbody>
+                </table>
+                 <p class="text-xs text-gray-500 mt-2 px-6 py-2"><strong>Best Practice Note:</strong> If a vendor (e.g., Palo Alto Networks) is cited as a leader in multiple categories, they should be listed under each relevant category. This accurately reflects their market position and breadth.</p>
+            </div>
+
+            <h3 class="viz-option-title">Visualization B: Treemap Chart</h3>
+            <p class="best-for"><strong>Best for:</strong> When you have 10+ vendors and want to visually represent market structure. The size of each block should correspond to the number of times an expert cited that vendor, providing a quick visual of market mindshare.</p>
+            <canvas id="landscapeChartTreemap"></canvas>
+            <div class="gsheet-note"><strong>Google Sheets Guide:</strong> While Google Sheets doesn't have a native treemap, you can create one by inserting a chart and selecting "Treemap chart" from the chart types. The data should be structured with columns for Category, Vendor, and Mentions (size).</div>
+        </div>
+
+        <!-- Theme 5: Eliciting Frameworks -->
+        <div class="card">
+            <h2 class="section-title">Theme 5: Eliciting Frameworks</h2>
+            <p class="best-for"><strong>Goal:</strong> To synthesize expert mental models into an actionable diligence framework.</p>
+            <p class="question-template"><strong>Question Template:</strong> "Imagine you're advising someone looking to acquire a company in the <strong>[Sub_Vertical]</strong> space. Beyond the standard financial diligence, what are the top 2-3 <strong>non-obvious red flags</strong> you would tell them to look for?"</p>
+
+            <h3 class="viz-option-title">Visualization: The 1-Page Diligence Framework</h3>
+            <p class="best-for"><strong>Best for:</strong> Creating the "Hero Asset" for a GTM campaign. This synthesizes qualitative answers into a high-value, actionable checklist for our PE audience.</p>
+            <div class="mt-4 p-6 border-2 border-dashed rounded-lg">
+                <h4 class="text-xl font-bold text-center playbook-title">3 Critical Tests for Cybersecurity Diligence</h4>
+                <p class="text-center text-sm playbook-subtitle mb-6">Synthesized from interviews with 15 leading CISOs</p>
+                
+                <div class="space-y-4">
+                    <div>
+                        <h5 class="font-bold text-lg text-[#0057FF]">Test #1: The AI Governance Test</h5>
+                        <p class="mt-1 text-gray-700"><strong>The Red Flag:</strong> Don’t ask “How are you using AI?”. Our experts tell us the critical question is “How are you governing AI?”. This test helps you uncover hidden liabilities before they impact valuation.<br><strong>The Killer Question:</strong> "Beyond a simple Acceptable Use Policy, what technical controls are in place to prevent proprietary code or sensitive data from being used to train public AI models?"</p>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-lg text-[#0057FF]">Test #2: The Vendor Value Test</h5>
+                        <p class="mt-1 text-gray-700"><strong>The Red Flag:</strong> Challenge the assumption that more tools = more security. Our experts report that vendor sprawl creates operational chaos and a significant drain on resources.<br><strong>The Killer Question:</strong> "Walk us through your process for decommissioning a redundant security tool. How many have you decommissioned in the last 18 months?"</p>
+                    </div>
+                     <div>
+                        <h5 class="font-bold text-lg text-[#0057FF]">Test #3: The Financial Risk Test</h5>
+                        <p class="mt-1 text-gray-700"><strong>The Red Flag:</strong> A target company cannot translate cybersecurity risks into financial terms. This indicates a lack of maturity and could hide significant future costs for remediation and compliance.<br><strong>The Killer Question:</strong> "Can you provide the risk register that quantifies the potential financial impact of your top three identified cybersecurity threats?"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        const vibrantBlue = '#0057FF';
+        const darkBlue = '#002366';
+        const lightBlue = '#A0C4FF';
+        const gray = '#CBD5E1';
+        const fontFamily = "'Inter', sans-serif";
+
+        Chart.defaults.font.family = fontFamily;
+
+        // Theme 1: Trends
+        new Chart(document.getElementById('trendChartBar'), {
+            type: 'bar',
+            data: {
+                labels: ['>30%', '15-30%', '5-15%', '≤5%', 'Same'],
+                datasets: [{ data: [20, 35, 30, 10, 5], backgroundColor: [darkBlue, vibrantBlue, lightBlue, '#CFD8E3', gray], borderRadius: 4 }]
+            },
+            options: { 
+                indexAxis: 'y', 
+                responsive: true, 
+                plugins: { legend: { display: false } }, 
+                scales: { 
+                    x: { 
+                        title: { display: true, text: '% of Respondents' },
+                        ticks: { callback: v => v + '%' } 
+                    },
+                    y: {
+                        title: { display: true, text: 'Projected Spend Change' }
+                    }
+                } 
+            }
+        });
+        
+        // Theme 2: Allocation
+        new Chart(document.getElementById('allocationChartStacked'), {
+            type: 'bar',
+            data: {
+                labels: ['Average Allocation of New Budget'],
+                datasets: [
+                    { label: 'Tooling/Software', data: [60], backgroundColor: darkBlue, borderRadius: { topRight: 0, bottomRight: 0, topLeft: 4, bottomLeft: 4 } },
+                    { label: 'Managed Services', data: [25], backgroundColor: vibrantBlue },
+                    { label: 'Headcount', data: [15], backgroundColor: lightBlue, borderRadius: { topRight: 4, bottomRight: 4, topLeft: 0, bottomLeft: 0 } }
+                ]
+            },
+            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, scales: { x: { stacked: true, display: false }, y: { stacked: true, display: false } } }
+        });
+        
+        const waffleData = { 'Tooling': 60, 'Services': 25, 'Headcount': 15 };
+        const waffleColors = { 'Tooling': darkBlue, 'Services': vibrantBlue, 'Headcount': lightBlue };
+        const waffleContainer = document.getElementById('waffle-chart-container');
+        let waffleHTML = '<div class="grid grid-cols-10 gap-1 w-64 mx-auto">';
+        Object.entries(waffleData).forEach(([key, value]) => {
+            for (let i = 0; i < value / 5; i++) {
+                waffleHTML += `<div class="w-6 h-6 rounded" style="background-color: ${waffleColors[key]}" title="${key}"></div>`;
+            }
+        });
+        waffleHTML += '</div><div class="flex justify-center mt-4 space-x-4">';
+        Object.entries(waffleData).forEach(([key, value]) => {
+             waffleHTML += `<div class="flex items-center"><div class="w-3 h-3 rounded-full mr-2" style="background-color: ${waffleColors[key]}"></div><span class="text-sm">${key} (${value}%)</span></div>`;
+        });
+        waffleHTML += '</div>';
+        waffleContainer.innerHTML = waffleHTML;
+
+        // Theme 3: Sentiment & Priorities
+        new Chart(document.getElementById('sentimentDistributionChart'), {
+            type: 'bar',
+            data: {
+                labels: ['1', '2', '3', '4', '5'],
+                datasets: [{
+                    label: '% of Respondents',
+                    data: [15, 35, 30, 15, 5],
+                    backgroundColor: [lightBlue, lightBlue, vibrantBlue, vibrantBlue, darkBlue],
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, ticks: { callback: v => v + '%' } },
+                    x: { title: { display: true, text: 'Readiness Score (1-5)' } }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('prioritiesChartClear'), {
+            type: 'bar',
+            data: {
+                labels: ['Data Governance', 'Employee Training', 'Threat Detection'],
+                datasets: [{ data: [60, 30, 10], backgroundColor: [darkBlue, vibrantBlue, lightBlue], borderRadius: 4 }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { callback: v => v + '%' } } } }
+        });
+
+        // Theme 4: Landscape
+        new Chart(document.getElementById('landscapeChartTreemap'), {
+            type: 'treemap',
+            data: {
+                datasets: [{
+                    tree: [
+                        {category: 'Endpoint Security', value: 35, vendor: 'CrowdStrike'},
+                        {category: 'Endpoint Security', value: 25, vendor: 'SentinelOne'},
+                        {category: 'Cloud Security', value: 30, vendor: 'Zscaler'},
+                        {category: 'Cloud Security', value: 20, vendor: 'Palo Alto'},
+                        {category: 'Identity', value: 28, vendor: 'Okta'},
+                        {category: 'Identity', value: 22, vendor: 'CyberArk'},
+                        {category: 'GRC', value: 18, vendor: 'Drata'},
+                        {category: 'Email Security', value: 15, vendor: 'Mimecast'},
+                    ],
+                    key: 'value',
+                    groups: ['category', 'vendor'],
+                    backgroundColor: (ctx) => {
+                        if (ctx.type !== 'data') return 'transparent';
+                        const category = ctx.raw._data.category;
+                        const colors = {
+                            'Endpoint Security': darkBlue,
+                            'Cloud Security': vibrantBlue,
+                            'Identity': lightBlue,
+                            'GRC': gray,
+                            'Email Security': '#93C5FD'
+                        };
+                        return colors[category] || gray;
+                    },
+                    borderColor: 'white',
+                    borderWidth: 2,
+                    spacing: 0.5,
+                    labels: {
+                        display: true,
+                        formatter: (ctx) => {
+                           if (ctx.raw.v < 20) { return null; }
+                           return ctx.raw._data.vendor;
+                        },
+                        color: 'white',
+                        font: { size: 12, weight: '600' }
+                    }
+                }]
+            },
+            options: {
+                plugins: {
+                    title: { display: false },
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            title: (items) => items[0].raw._data.category,
+                            label: (item) => `${item.raw._data.vendor}: ${item.raw.v} mentions`
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
